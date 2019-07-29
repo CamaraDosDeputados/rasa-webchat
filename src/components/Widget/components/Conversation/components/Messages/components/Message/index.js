@@ -18,20 +18,21 @@ class Message extends PureComponent {
           {sender === 'response' ? (
             <ReactMarkdown
               className={'markdown'}
+              escapeHtml={false}
               source={text}
               linkTarget={(url) => {
                 if (!url.startsWith('mailto') && !url.startsWith('javascript')) return '_blank';
                 return undefined;
               }}
               transformLinkUri={null}
-              renderers={{
+              /*renderers={{
                 link: props =>
                   docViewer ? (
                     <DocViewer src={props.href}>{props.children}</DocViewer>
                   ) : (
                     <a href={props.href}>{props.children}</a>
                   )
-              }}
+              }}*/
             />
           ) : (
             text
