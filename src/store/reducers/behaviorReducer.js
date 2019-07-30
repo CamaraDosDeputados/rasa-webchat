@@ -44,7 +44,8 @@ export default function (inputFieldTextHint, connectingText, storage, docViewer 
         return storeParams(state.set('connected', true).set('disabledInput', false));
       }
       case actionTypes.DISCONNECT: {
-        return storeParams(state.set('connected', false).set('disabledInput', true));
+        //return storeParams(state.set('connected', false).set('disabledInput', true));
+        return storeParams(state.set('connected', false).set('disabledInput', false));
       }
       case actionTypes.INITIALIZE: {
         return storeParams(state.set('initialized', true));

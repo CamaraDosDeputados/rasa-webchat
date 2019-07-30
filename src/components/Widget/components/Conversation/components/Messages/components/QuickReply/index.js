@@ -40,7 +40,7 @@ class QuickReply extends PureComponent {
           {this.props.message.get('quick_replies').map((reply, index) => <div
             key={index} className={'reply'}
             onClick={this.handleClick.bind(this, reply)}
-          >{reply.title}</div>)}
+            dangerouslySetInnerHTML={{__html: reply.title}}></div>)}
         </div>
         }
       </div>);

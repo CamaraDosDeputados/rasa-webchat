@@ -18,7 +18,7 @@ export function connect() {
 }
 
 export function disconnect() {
-  // store.dispatch(actions.disconnect());
+  store.dispatch(actions.disconnect());
 }
 
 export function addUserMessage(text) {
