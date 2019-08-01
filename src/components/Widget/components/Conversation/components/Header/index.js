@@ -28,12 +28,12 @@ const Header = ({
       <h4 className="title">{title}</h4>
       {subtitle && <span>{subtitle}</span>}
     </div>
-  {
+  /*{
     !connected &&
     <span className="loading">
       {connectingText}
     </span>
-  }
+  }*/
   </div>;
 
 Header.propTypes = {
