@@ -28,6 +28,10 @@ const Header = ({
       <h4 className="title">{title}</h4>
       {subtitle && <span>{subtitle}</span>}
     </div>
+    {
+    connectingText && connectingText != '' &&
+    <span className="loading" dangerouslySetInnerHTML={{__html: connectingText}}></span>
+    }
   </div>;
 
 Header.propTypes = {
