@@ -53,19 +53,32 @@ const mapStateToProps = state => ({
   inputState: state.behavior.get('disabledInput')
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleInputDisabled: _ => dispatch(toggleInputDisabled()),
   changeInputFieldHint: hint => dispatch(changeInputFieldHint(hint)),
   chooseReply: (payload, title, id) => {
     dispatch(setQuickReply(id, title));
-    dispatch(addUserMessage(title));
-    dispatch(emitUserMessage(payload));
+    // dispatch(addUserMessage(title));
+    // dispatch(emitUserMessage(payload));
     // dispatch(toggleInputDisabled());
+
+    // We use an event object compatible with the method
+    // handleMessageSubmit from Widget/index.js
+    var messageEvent = {
+        'target': {
+            'message': {
+                'value': title,
+                'valueToEmit': payload
+            }
+        }
+    };
+    ownProps.sendMessage(messageEvent)
   }
 });
 
 QuickReply.propTypes = {
-  message: PROP_TYPES.QUICK_REPLY
+  message: PROP_TYPES.QUICK_REPLY,
+  sendMessage: PROP_TYPES.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuickReply);

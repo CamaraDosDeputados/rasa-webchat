@@ -20,6 +20,7 @@ const Conversation = props =>
     <Messages
       profileAvatar={props.profileAvatar}
       params={props.params}
+      sendMessage={props.sendMessage}
     />
     <Sender
       sendMessage={props.sendMessage}

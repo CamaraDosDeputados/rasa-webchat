@@ -29,9 +29,24 @@ class Widget extends Component {
   constructor(props) {
     super(props);
     this.messages = [];
+    this.responseTimeoutHandler = null;
+    this.retryTimeoutHandler = null;
+    this.utterCount = 0;
+    this.maxRetries = 3;
+    this.retryInterval = 4000;
+
     setInterval(() => {
       if (this.messages.length > 0) {
-        this.dispatchMessage(this.messages.shift());
+        var message = this.messages.shift();
+
+        if (this.messages.length+1 >= this.utterCount) {
+            this.dispatchMessage(message);
+            console.log(`Removing responseTimeoutHandler`);
+            clearTimeout(this.responseTimeoutHandler);
+            clearTimeout(this.retryTimeoutHandler);
+            this.responseTimeoutHandler = null;
+            this.retryTimeoutHandler = null;
+        }
       }
     }, this.props.interval);
   }
@@ -189,11 +204,44 @@ class Widget extends Component {
   }
 
   handleMessageSubmit = (event) => {
-    event.preventDefault();
-    const userUttered = event.target.message.value;
+    if (event.preventDefault) {
+        event.preventDefault();
+    }
+    const userUtteredDisplay = event.target.message.value;
+    const userUttered = event.target.message.valueToEmit ? event.target.message.valueToEmit : userUtteredDisplay;
+
     if (userUttered) {
-      this.props.dispatch(addUserMessage(userUttered));
+      if (this.responseTimeoutHandler) {
+        clearTimeout(this.responseTimeoutHandler);
+        clearTimeout(this.retryTimeoutHandler);
+      }
+
+      this.props.dispatch(addUserMessage(userUtteredDisplay));
       this.props.dispatch(emitUserMessage(userUttered));
+      this.utterCount = 1;
+      var _this = this;
+
+      this.responseTimeoutHandler = setTimeout(function() {
+        _this.utterCount++;
+        console.log(`Trying to resend message (${_this.utterCount}): ${userUttered}`);
+        // _this.props.dispatch(addUserMessage(userUtteredDisplay));
+        _this.props.dispatch(emitUserMessage(userUttered));
+      }, this.retryInterval);
+
+      this.retryTimeoutHandler = setTimeout(function() {
+        console.log(`Giving up message after ${_this.utterCount} tries: ${userUttered}`);
+        clearTimeout(_this.responseTimeoutHandler);
+        clearTimeout(_this.retryTimeoutHandler);
+
+        if (_this.messages.length < _this.utterCount) {
+            _this.messages = [];
+            // Notify user that something is wrong
+            var errorMsg = {
+                'text': 'Detectei um problema no nosso sistema. Por favor tente se conectar mais tarde.'
+            }
+            _this.dispatchMessage(errorMsg);
+        }
+      }, this.retryInterval * (this.maxRetries+1));
     }
     event.target.message.value = '';
   };

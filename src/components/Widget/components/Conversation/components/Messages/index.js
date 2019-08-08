@@ -45,9 +45,9 @@ class Messages extends Component {
       return null
     })()
     if (message.get('type') === 'component') {
-      return <ComponentToRender id={index} {...message.get('props')} isLast={isLast}/>;
+      return <ComponentToRender id={index} {...message.get('props')} sendMessage={this.props.sendMessage} isLast={isLast}/>;
     }
-    return <ComponentToRender id={index} params={params} message={message} isLast={isLast} />;
+    return <ComponentToRender id={index} params={params} message={message} sendMessage={this.props.sendMessage} isLast={isLast} />;
   }
 
   render() {
@@ -75,7 +75,8 @@ class Messages extends Component {
 
 Messages.propTypes = {
   messages: ImmutablePropTypes.listOf(ImmutablePropTypes.map),
-  profileAvatar: PropTypes.string
+  profileAvatar: PropTypes.string,
+  sendMessage: PropTypes.func
 };
 
 export default connect(store => ({
