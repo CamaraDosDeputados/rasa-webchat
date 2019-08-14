@@ -16,6 +16,7 @@ import {
   initialize,
   connectServer,
   disconnectServer,
+  setStatus,
   pullSession
 } from 'actions';
 
@@ -31,9 +32,11 @@ class Widget extends Component {
     this.messages = [];
     this.responseTimeoutHandler = null;
     this.retryTimeoutHandler = null;
+    this.typingTimeoutHandler = null;
     this.utterCount = 0;
     this.maxRetries = 3;
     this.retryInterval = 4000;
+    this.isTypingDelay = 1000;
 
     setInterval(() => {
       if (this.messages.length > 0) {
@@ -42,8 +45,10 @@ class Widget extends Component {
         if (this.messages.length+1 >= this.utterCount) {
             this.dispatchMessage(message);
             console.log(`Removing responseTimeoutHandler`);
-            clearTimeout(this.responseTimeoutHandler);
+            clearInterval(this.responseTimeoutHandler);
             clearTimeout(this.retryTimeoutHandler);
+            clearTimeout(this.typingTimeoutHandler);
+            this.props.dispatch(setStatus(''));
             this.responseTimeoutHandler = null;
             this.retryTimeoutHandler = null;
         }
@@ -212,7 +217,7 @@ class Widget extends Component {
 
     if (userUttered) {
       if (this.responseTimeoutHandler) {
-        clearTimeout(this.responseTimeoutHandler);
+        clearInterval(this.responseTimeoutHandler);
         clearTimeout(this.retryTimeoutHandler);
       }
 
@@ -221,7 +226,7 @@ class Widget extends Component {
       this.utterCount = 1;
       var _this = this;
 
-      this.responseTimeoutHandler = setTimeout(function() {
+      this.responseTimeoutHandler = setInterval(function() {
         _this.utterCount++;
         console.log(`Trying to resend message (${_this.utterCount}): ${userUttered}`);
         // _this.props.dispatch(addUserMessage(userUtteredDisplay));
@@ -230,8 +235,10 @@ class Widget extends Component {
 
       this.retryTimeoutHandler = setTimeout(function() {
         console.log(`Giving up message after ${_this.utterCount} tries: ${userUttered}`);
-        clearTimeout(_this.responseTimeoutHandler);
+        clearInterval(_this.responseTimeoutHandler);
         clearTimeout(_this.retryTimeoutHandler);
+        clearTimeout(this.typingTimeoutHandler);
+        _this.props.dispatch(setStatus(''));
 
         if (_this.messages.length < _this.utterCount) {
             _this.messages = [];
@@ -241,7 +248,13 @@ class Widget extends Component {
             }
             _this.dispatchMessage(errorMsg);
         }
-      }, this.retryInterval * (this.maxRetries+1));
+      }, this.retryInterval * (this.maxRetries));
+
+      clearTimeout(this.typingTimeoutHandler);
+      this.typingTimeoutHandler = setTimeout(function() {
+        console.log(`Ativando timeout para is typing`);
+        _this.props.dispatch(setStatus('Ulysses está digitando...'));
+      }, this.isTypingDelay);
     }
     event.target.message.value = '';
   };
@@ -274,7 +287,8 @@ const mapStateToProps = state => ({
   initialized: state.behavior.get('initialized'),
   connected: state.behavior.get('connected'),
   isChatOpen: state.behavior.get('isChatOpen'),
-  isChatVisible: state.behavior.get('isChatVisible')
+  isChatVisible: state.behavior.get('isChatVisible'),
+  statusText: state.behavior.get('statusText')
 });
 
 Widget.propTypes = {
@@ -296,6 +310,7 @@ Widget.propTypes = {
   connected: PropTypes.bool,
   initialized: PropTypes.bool,
   openLauncherImage: PropTypes.string,
+  statusText: PropTypes.string,
   closeImage: PropTypes.string
 };
 

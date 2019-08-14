@@ -159,3 +159,10 @@ export function pullSession() {
   };
 }
 
+export function setStatus(text) {
+  return {
+    type: actions.SET_STATUS,
+    text
+  };
+}
+

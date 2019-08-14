@@ -36,6 +36,7 @@ const WidgetLayout = (props) => {
           {...{ showCloseButton }}
           connected={props.connected}
           connectingText={props.connectingText}
+          statusText={props.statusText}
           closeImage={props.closeImage}
         />
       }
@@ -60,7 +61,8 @@ const mapStateToProps = state => ({
   isChatOpen: state.behavior.get('isChatOpen'),
   disabledInput: state.behavior.get('disabledInput'),
   connected: state.behavior.get('connected'),
-  connectingText: state.behavior.get('connectingText')
+  connectingText: state.behavior.get('connectingText'),
+  statusText: state.behavior.get('statusText')
 })
 
 WidgetLayout.propTypes = {
@@ -80,6 +82,7 @@ WidgetLayout.propTypes = {
   params: PropTypes.object,
   connected: PropTypes.bool,
   connectingText: PropTypes.string,
+  statusText: PropTypes.string,
   openLauncherImage: PropTypes.string,
   closeImage: PropTypes.string
 };

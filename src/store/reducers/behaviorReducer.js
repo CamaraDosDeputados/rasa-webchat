@@ -3,7 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { SESSION_NAME } from 'constants';
 import { getLocalSession, storeParamsTo } from './helper';
 
-export default function (inputFieldTextHint, connectingText, storage, docViewer = false) {
+export default function (inputFieldTextHint, connectingText, storage, docViewer = false, statusText) {
   const initialState = Map({
     connected: false,
     initialized: false,
@@ -12,7 +12,8 @@ export default function (inputFieldTextHint, connectingText, storage, docViewer 
     disabledInput: true,
     docViewer,
     inputFieldTextHint,
-    connectingText
+    connectingText,
+    statusText
   });
 
   return function reducer(state = initialState, action) {
@@ -62,6 +63,9 @@ export default function (inputFieldTextHint, connectingText, storage, docViewer 
         } else {
           return state;
         }
+      }
+      case actionTypes.SET_STATUS: {
+        return storeParams(state.set('statusText', action.text));
       }
       default:
         return state;
