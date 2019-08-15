@@ -1,89 +1,61 @@
 @import "variables.scss";
 @import "common.scss";
 
-.conversation-container {
-  .header {
-    background-color: $blue-1;
-    color: $white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    height: 55px;
-    font-family: $roboto;
+.status-text {
+
+  p,
+  .markdown {
+    display: inline;
+    font-style: italic;
   }
 
-  .title {
-    font-size: 20px;
-    margin: 0;
-    font-family: $roboto;
-  }
-
-  .close-button {
-    display: none;
-  }
-
-  .loading {
-    background-color: $grey-3;
-    color: $white;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 5px 0 5px;
-    font-family: $roboto;
-    font-size: 14px;
+  .typing {
+    display: inline;
+    padding-top: 10px;
+    vertical-align: middle;
+    margin-left: 6px;
   }
 }
 
-.widget-embedded {
-  .header {
-    display: none;
+.typing-bar {
+  display: inline-block;
+  width: 4px;
+  height: 10px;
+  border-radius: 4px;
+  animation: loading 1s ease-in-out infinite;
+  margin-left: 4px;
+
+  &:nth-child(1) {
+    background-color: #1B5E20;
+    animation-delay: 0;
+  }
+
+  &:nth-child(2) {
+    background-color: #388E3C;
+    animation-delay: 0.09s;
+  }
+
+  &:nth-child(3) {
+    background-color: #4CAF50;
+    animation-delay: .18s;
+  }
+
+  &:nth-child(4) {
+    background-color: #81C784;
+    animation-delay: .27s;
   }
 }
 
-.full-screen {
-
-  .header {
-    @include header-fs;
+@keyframes loading {
+  0% {
+    transform: scale(1);
   }
 
-  .title {
-    @include title-fs;
+  10% {
+    transform: scale(1, 2.2);
   }
 
-  .close-button {
-    @include close-button-fs;
-  }
-
-  .close {
-    @include close-fs;
-  }
-
-  .loading {
-    @include loading-fs;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .conversation-container {
-    .header {
-      @include header-fs;
-    }
-
-    .title {
-      @include title-fs;
-    }
-
-    .close-button {
-      @include close-button-fs;
-    }
-
-    .close {
-      @include close-fs;
-    }
-
-    .loading {
-      @include loading-fs;
-    }
+  30% {
+    transform: scale(1);
   }
 }

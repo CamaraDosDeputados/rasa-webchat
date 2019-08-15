@@ -253,7 +253,7 @@ class Widget extends Component {
       clearTimeout(this.typingTimeoutHandler);
       this.typingTimeoutHandler = setTimeout(function() {
         console.log(`Ativando timeout para is typing`);
-        _this.props.dispatch(setStatus('Ulysses está digitando...'));
+        _this.props.dispatch(setStatus('Ulysses está digitando'));
       }, this.isTypingDelay);
     }
     event.target.message.value = '';

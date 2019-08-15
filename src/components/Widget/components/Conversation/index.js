@@ -25,6 +25,7 @@ const Conversation = props =>
     />
     <Status
       text={props.statusText}
+      profileAvatar={props.profileAvatar}
     />
     <Sender
       sendMessage={props.sendMessage}
