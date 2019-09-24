@@ -37,10 +37,10 @@ class QuickReply extends PureComponent {
         <Message message={this.props.message} />
         {this.props.isLast &&
         <div className="replies">
-          {this.props.message.get('quick_replies').map((reply, index) => <div
+          {this.props.message.get('quick_replies').map((reply, index) => <button
             key={index} className={'reply'}
             onClick={this.handleClick.bind(this, reply)}
-            dangerouslySetInnerHTML={{__html: reply.title}}></div>)}
+            dangerouslySetInnerHTML={{__html: reply.title}}></button>)}
         </div>
         }
       </div>);
