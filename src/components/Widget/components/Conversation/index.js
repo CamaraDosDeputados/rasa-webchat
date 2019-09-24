@@ -8,7 +8,7 @@ import Status from './components/Status';
 import './style.scss';
 
 const Conversation = props =>
-  <div className="conversation-container">
+  <div className="conversation-container" role="dialog" aria-labelledby="dialog1Title">
     <Header
       title={props.title}
       subtitle={props.subtitle}

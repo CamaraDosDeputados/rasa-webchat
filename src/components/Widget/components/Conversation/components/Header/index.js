@@ -14,7 +14,7 @@ const Header = ({
   closeImage
 }) =>
   <div>
-    <div className="header">
+    <div className="header" >
       {
         showCloseButton &&
         <button className="close-button" onClick={toggleChat}>
@@ -25,8 +25,8 @@ const Header = ({
           />
         </button>
       }
-      <h4 className="title">{title}</h4>
-      {subtitle && <span>{subtitle}</span>}
+      <h4 className="title" id="dialog1Title">{title}</h4>
+      {subtitle && <span id="dialog1Desc">{subtitle}</span>}
     </div>
     {
     connectingText && connectingText != '' &&
