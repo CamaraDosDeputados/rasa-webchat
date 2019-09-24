@@ -59,7 +59,7 @@ class Messages extends Component {
               {
                 this.props.profileAvatar &&
                 message.get('showAvatar') &&
-                <img src={this.props.profileAvatar} className="avatar" alt="profile" />
+                <img src={this.props.profileAvatar} className="avatar" alt="Ulysses disse: " />
               }
               {
 

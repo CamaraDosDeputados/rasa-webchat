@@ -14,6 +14,7 @@ class Message extends PureComponent {
     const text = this.props.message.get('text');
     return (
       <div className={sender}>
+        {sender === 'client' ? (<span className="sr-only">Você disse: </span>) : <span />}
         <div className="message-text">
           {sender === 'response' ? (
             <ReactMarkdown
