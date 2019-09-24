@@ -21,7 +21,7 @@ const Header = ({
           <img
             className={`close ${closeImage ? '' : 'default'}`}
             src={closeImage || close}
-            alt="close"
+            alt="Fechar conversa"
           />
         </button>
       }
