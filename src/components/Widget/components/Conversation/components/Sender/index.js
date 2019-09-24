@@ -7,6 +7,7 @@ import './style.scss';
 
 const Sender = ({ sendMessage, inputFieldTextHint, disabledInput }) =>
   <form className="sender" onSubmit={sendMessage}>
+    <label htmlFor="some-unique-id" className="sr-only" >Escreva uma mensagem</label>
     <input type="text" className="new-message" name="message" placeholder={inputFieldTextHint} disabled={disabledInput} autoFocus autoComplete="off" />
     <button type="submit" className="send">
       <img src={send} className="send-icon" alt="Enviar mensagem" />
