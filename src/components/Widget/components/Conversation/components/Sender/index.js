@@ -9,7 +9,7 @@ const Sender = ({ sendMessage, inputFieldTextHint, disabledInput }) =>
   <form className="sender" onSubmit={sendMessage}>
     <input type="text" className="new-message" name="message" placeholder={inputFieldTextHint} disabled={disabledInput} autoFocus autoComplete="off" />
     <button type="submit" className="send">
-      <img src={send} className="send-icon" alt="send" />
+      <img src={send} className="send-icon" alt="Enviar mensagem" />
     </button>
   </form>;
 
