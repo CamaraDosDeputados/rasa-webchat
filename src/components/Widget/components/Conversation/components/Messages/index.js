@@ -52,7 +52,7 @@ class Messages extends Component {
 
   render() {
     return (
-      <div id="messages" className="messages-container">
+      <div id="messages" className="messages-container" role="log" aria-live="polite">
         {
           this.props.messages.map((message, index) =>
             <div className="message" key={index}>
