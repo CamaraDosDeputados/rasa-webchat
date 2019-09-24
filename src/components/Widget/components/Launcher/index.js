@@ -25,7 +25,7 @@ const Launcher = ({
     >
       <Badge badge={badge} />
       {isChatOpen ?
-        <img src={closeImage || close} className={`close-launcher ${closeImage ? '' : 'default'}`} alt="" /> :
+        <img src={closeImage || close} className={`close-launcher ${closeImage ? '' : 'default'}`} alt="Fechar conversa" /> :
         <img src={openLauncherImage || openLauncher} className="open-launcher" alt="Converse com Ulysses" />
       }
     </button>
