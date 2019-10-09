@@ -24,7 +24,7 @@ class Message extends PureComponent {
   render() {
     const { docViewer } = this.props;
     const sender = this.props.message.get('sender');
-    const text = this.stripTags(this.props.message.get('text'), '<a>');
+    const text = this.stripTags(this.props.message.get('text'), '<a>|<br>');
     return (
       <div className={sender}>
         {sender === 'client' ? (<span className="sr-only">Você disse: </span>) : null}
