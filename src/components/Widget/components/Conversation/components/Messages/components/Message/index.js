@@ -15,10 +15,16 @@ class Message extends PureComponent {
       window.$('.icone-ajuda').html('?');
     }
   }
+  stripTags(input, allowed) {
+    allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('')
+    const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+    const aux = input.replace(tags, ($0, $1) => (allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''))
+    return aux.replace('&nbsp;', ' ');
+  }
   render() {
     const { docViewer } = this.props;
     const sender = this.props.message.get('sender');
-    const text = this.props.message.get('text');
+    const text = this.stripTags(this.props.message.get('text'), '<a>');
     return (
       <div className={sender}>
         {sender === 'client' ? (<span className="sr-only">Você disse: </span>) : null}
