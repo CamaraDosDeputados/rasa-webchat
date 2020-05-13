@@ -1,6 +1,19 @@
 # webchat
 
 A simple webchat widget to connect with a chatbot. Forked from [react-chat-widget](https://github.com/Wolox/react-chat-widget)
+
+## How to build for use in HTML (using Conda)
+```
+git clone https://github.com/CamaraDosDeputados/rasa-webchat.git
+cd rasa-webchat
+conda activate <your-env>
+conda install nodejs
+npm install webpack
+npm run build
+```
+The build script will generate a Javascript file `index.js` in the `lib` folder.
+
+
 ## Features
 
 - Text Messages
